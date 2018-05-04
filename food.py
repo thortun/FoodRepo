@@ -12,6 +12,7 @@ def main():
 
     k = 0
     n = 1
+    fileID = open('recipeData.txt', 'w')
     while True:
         soup = "https://www.allrecipes.com/recipes/17562/?page=" + str(n) # list of many recipes
         soup = u.getData(soup)
@@ -21,8 +22,11 @@ def main():
             k += 1
             url = link.find("a")["href"]
             rec = rc.AllRecipeRecipe(url)
-            print(rec)
-            print(k)
+            fileID.write(str(rec) + '\n')
+            try:
+                print k
+            except IOError:
+                pass
         n += 1
 
 if __name__ == '__main__':

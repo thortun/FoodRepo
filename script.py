@@ -1,26 +1,21 @@
-from bs4 import BeautifulSoup
+import urllib2 # For requesting
 
-import utilities as u
+def main():
+	api_key = '9ca9e5104d5bd6289bbb72f8cd24574e'  # Api_key
+	hdr = {} 
 
-soup = u.getData('http://www.paulgraham.com/articles.html')
-soup = BeautifulSoup(soup, 'html.parser')
+	url = 'http://food2fork.com/api/get'       # Base for requests
 
-links = soup.find_all("td", attrs = {"width" : "435"})
+	rId = str(37859)
 
-with open('input.txt', 'w') as fileID:
-	for l in links:
-		try:
-			l = l.find("a")
-			root = "http://www.paulgraham.com/"
-			branch = l["href"]
-			if 'http' in branch:
-				pass
-			else:
-				fullLink = root + branch
-				pageSoup = u.getData(fullLink)
-				pageSoup = BeautifulSoup(pageSoup, 'html.parser')
-				text = pageSoup.find("font").get_text()
-				fileID.write(text + '\n')
+	# reqUrl = url + '?key=' + api_key + '&rId=' + rId
+	reqUrl = 'http://food2fork.com/api/search?key=%s&q=shredded' % api_key
+	print reqUrl
 
-		except:
-			pass
+
+	req = urllib2.Request(reqUrl, headers = hdr)
+
+	print urllib2.urlopen(req)
+
+if __name__ == '__main__':
+	main()

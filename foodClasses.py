@@ -31,7 +31,7 @@ class Recipe(object): # Make this a new-style
                 returnString = ""             # Start with empty
 
                 # Add the name to the string
-                returnString += self.recipeName + '\n'
+                returnString += '##' + self.recipeName + '\n'
                 # Add the time to the string
                 returnString += str(self.time) + '\n'
                 for ingr in self.ingredients:
