@@ -1,6 +1,5 @@
-import urllib2 # Most URL-handeling happens here
-import urllib # Downloading images from links
-import re # For handeling the hyperref-mess
+import urllib2      # Most URL-handeling happens here
+import unicodedata  # To make unicode to only ascii
 
 from math import ceil
 
@@ -115,3 +114,7 @@ def cropWhites(line):
     while line[len(line) - 1] == ' ':
         line = line[-1:]  # Crop the last element if it is a white space
     return line
+
+def unicodeToASCII(line):
+    """Fixes some problems when writing and stuff."""
+    return unicodedata.normalize('NFKD', line).encode('ascii', 'ignore')

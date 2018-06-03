@@ -20,31 +20,36 @@ class Recipe(object): # Make this a new-style
         at the index specified.
         """
         self.ingredients.append(ingredient) # Add the ingredient to the end
-        pass
 
     def __str__(self):
         """Prints the recipie as string my man."""
         if self.isBroken:
-            return "Broken recipe!" # If the recipe is broken, return this string
+            raise ValueError("Recipe is broken!")
         else:
-            try:
-                returnString = ""             # Start with empty
+            returnString = ""             # Start with empty
+            # Add the name to the string
+            returnString += '##' + self.recipeName + '\n'
 
-                # Add the name to the string
-                returnString += '##' + self.recipeName + '\n'
-                # Add the time to the string
-                returnString += str(self.time) + '\n'
-                for ingr in self.ingredients:
-                    returnString += str(ingr) + '\n' # Add ingredient list first
-                returnString += '\n'                 # Some space
-                for step in self.steps:
-                    returnString += str(step) + '\n' # Add the steps
-                return returnString
-            except UnicodeDecodeError: # If we cannot decode, declare the recipe a failure
-                try:
-                    return "UnicodeDecodeError in " + self.name
-                except:
-                    return "UnicodeDecodeError"
+            # Add the time to the string
+            returnString += str(self.time) + '\n'
+
+            for ingr in self.ingredients:
+                returnString += ingr + '\n' # Add ingredient list first
+
+            returnString += '\n'            # Some space
+            for step in self.steps:
+                returnString += step + '\n' # Add the steps
+
+            return returnString
+
+    def asDict(self):
+        """Returns the recipe as a dict."""
+        dicty = {}
+        dicty["recipeName"] = self.recipeName
+        dicty["time"]       = self.time
+        dicty["ingredients"]= self.ingredients
+        dicty["steps"]      = self.steps
+        return dicty
 
 class Ingredient:
     """Ingredient class."""
@@ -71,7 +76,6 @@ class Amount:
     def toGrams(self):
         """Converts weight measurments to grams."""
         pass
-
 
 class Unit:
     """Class to keep track of units."""

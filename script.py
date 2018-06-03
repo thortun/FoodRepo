@@ -1,21 +1,31 @@
 import urllib2 # For requesting
+from bs4 import BeautifulSoup
+import json
+
+import utilities as u
 
 def main():
-	api_key = '9ca9e5104d5bd6289bbb72f8cd24574e'  # Api_key
-	hdr = {} 
-
-	url = 'http://food2fork.com/api/get'       # Base for requests
-
-	rId = str(37859)
-
-	# reqUrl = url + '?key=' + api_key + '&rId=' + rId
-	reqUrl = 'http://food2fork.com/api/search?key=%s&q=shredded' % api_key
-	print reqUrl
 
 
-	req = urllib2.Request(reqUrl, headers = hdr)
+	lineNum = 1552
 
-	print urllib2.urlopen(req)
+	with open('./recipes/duplicateData.txt') as fileID:
+		for i, line in enumerate(fileID):
+			if i == lineNum:
+				ingredients =  json.loads(line)["ingredients"]
+				for ingr in ingredients:
+					print ingr
+					print splitIngredientString(ingr)
+				break
+
+
+def splitIngredientString(ingr):
+	"""Splits the ingredient into amount, unit and ingredient name."""
+	splitList = []
+
+
+
+	return splitList
 
 if __name__ == '__main__':
 	main()
